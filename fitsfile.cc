@@ -23,7 +23,7 @@ fitsfile*& cfitsfile::fptr()
   return pff;
 }
 
-void cfitsfile::open(const char* name)
+int cfitsfile::open(const char* name)
 {
   int status=0;
   if(pff)
@@ -31,16 +31,18 @@ void cfitsfile::open(const char* name)
       if(fits_close_file(pff,&status))
 	{
 	  std::cerr<<"Error:"<<status<<std::endl;
+	  return status;
 	}
     }
   if(ffopen(&pff,name,READWRITE,&status))
     {
       std::cerr<<"Error:"<<status<<std::endl;
     }
+  return status;
 }
 
 
-void cfitsfile::create(const char* name)
+int cfitsfile::create(const char* name)
 {
   int status=0;
   this->close();
@@ -49,6 +51,7 @@ void cfitsfile::create(const char* name)
     {
       std::cerr<<"Error:"<<status<<std::endl;
     }
+  return status;
 }
 
 void cfitsfile::close()

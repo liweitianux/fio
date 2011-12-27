@@ -23,10 +23,10 @@ class cfitsfile
   fitsfile*& fptr();
 
 
-  void open(const char* name);
+  int open(const char* name);
 
 
-  void create(const char* name);
+  int create(const char* name);
 
 
   void close();
