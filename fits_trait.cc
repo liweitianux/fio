@@ -9,6 +9,10 @@ double fits_trait<double>::nulval=0;
 float fits_trait<float>::nulval=0;
 long fits_trait<long>::nulval=0;
 short fits_trait<short>::nulval=0;
+#ifdef WITH_COMPLEX
+std::complex<double> fits_trait<std::complex<double> >::nulval=0.;
+std::complex<float> fits_trait<std::complex<float> >::nulval=0.f;
+#endif
 
 double fits_trait<double>::max=DOUBLE_MAX;
 float fits_trait<float>::max=FLOAT_MAX;

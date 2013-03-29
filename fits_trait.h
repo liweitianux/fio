@@ -1,6 +1,9 @@
 #ifndef fits_traits_h
 #define fits_traits_h
 #include <fitsio.h>
+#ifdef WITH_COMPLEX
+#include <complex>
+#endif
 
 template <typename T>
 class fits_trait;
@@ -56,6 +59,30 @@ class fits_trait<double>
   static double min;
 };
 
+#ifdef WITH_COMPLEX
+template <>
+class fits_trait<std::complex<float> >
+{
+ public:
+  const static int bitpix=FLOAT_IMG;
+  const static int datatype=TCOMPLEX;
+  static std::complex<float> nulval;
+  //static float max;
+  //static float min;
+};
+
+template <>
+class fits_trait<std::complex<double> >
+{
+ public:
+  const static int bitpix=DOUBLE_IMG;
+  const static int datatype=TDBLCOMPLEX;
+  static std::complex<double> nulval;
+  //static double max;
+  //static double min;
+};
+#endif
+
 
 template <int typecode>
 class typecode_trait;
@@ -87,6 +114,22 @@ class typecode_trait<TDOUBLE>
  public:
   typedef double datatype;
 };
+
+#ifdef WITH_COMPLEX
+template <>
+class typecode_trait<TCOMPLEX>
+{
+ public:
+  typedef std::complex<float> datatype;
+};
+
+template <>
+class typecode_trait<TDBLCOMPLEX>
+{
+ public:
+  typedef std::complex<double> datatype;
+};
+#endif
 
 /*
 double fits_trait<double>::nulval=0;
