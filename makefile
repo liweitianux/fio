@@ -1,6 +1,4 @@
-ICFITSIO =-I/usr/local/include 
-LCFITSIO =-L/usr/local/lib
-IBLITZ=-I/usr/include
+include makefile.cfg
 
 HEADS= fits_trait.h fitsfile.h fio.h 
 BASOBJ=fits_trait.o fio.o region.o region_imp.o fitsfile.o
@@ -25,7 +23,7 @@ fitsfile.o:fitsfile.cc fitsfile.h
 	g++ $(CPPFLAGS) -g -c fitsfile.cc $(ICFITSIO) $(IBLITZ) -fPIC
 
 fio.o:fio.cc fio.h
-	g++ $(CPPFLAGS) -g -c fio.cc -I $(ICFITSIO) $(IBLITZ) -fPIC
+	g++ $(CPPFLAGS) -g -c fio.cc $(ICFITSIO) $(IBLITZ) -fPIC
 
 
 libfio.a:libfio.o $(BASOBJ)
