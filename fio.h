@@ -412,6 +412,20 @@ void operator<<(cfitsfile& cff,::blitz::Array<T,3>& h2d)
      }
 }
 
+template <typename T_KEY>
+T_KEY read_key(cfitsfile& ff,std::string key_name)
+{
+  T_KEY result;
+  int status=0;
+  fits_read_key(ff.fptr(),fits_trait<T_KEY>::datatype,key_name.c_str(),&result,NULL,&status);
+  if(status)
+    {
+      std::cerr<<"ERROR, status="<<status;
+      assert(0);
+    }
+  return result;
+}
+
 class pixel
 {
 public:
