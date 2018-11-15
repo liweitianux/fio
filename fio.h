@@ -1,14 +1,34 @@
 #ifndef FIO_H
 #define FIO_H
-//#include "holder.h"
+
 #include <blitz/array.h>
 #include <iostream>
 #include <fitsio.h>
 #include <cstddef>
-#include "fits_trait.h"
-#include "fitsfile.h"
-//using namespace std;
 
+/* "fitsfile.h" begins */
+
+class cfitsfile
+{
+ private:
+  fitsfile* pff;
+
+ private:
+  cfitsfile(const cfitsfile&);
+  cfitsfile& operator=(const cfitsfile&);
+
+ public:
+  cfitsfile();
+  ~cfitsfile();
+
+ public:
+  fitsfile*& fptr();
+  int open(const char* name);
+  int create(const char* name);
+  void close();
+};
+
+/* "fitsfile.h" ends */
 
 extern fitsfile* openimage(const char* name);
 extern fitsfile* createfitsfile(const char* name);
@@ -33,6 +53,129 @@ extern void put_offsets(cfitsfile& ff,double x_offset,double y_offset);
 extern void pass_offsets(cfitsfile& ff1,cfitsfile& ff2);
 
 
+/* "fits_trait.h" begins */
+
+template <typename T>
+class fits_trait;
+
+template <>
+class fits_trait<short>
+{
+ public:
+  const static int bitpix=SHORT_IMG;
+  const static int datatype=TSHORT;
+  static short nulval;
+  static short max;
+  static short min;
+};
+
+
+template <>
+class fits_trait<long>
+{
+ public:
+  const static int bitpix=LONG_IMG;
+  const static int datatype=TLONG;
+  static long nulval;
+  static long max;
+  static long min;
+};
+
+template <>
+class fits_trait<float>
+{
+ public:
+  const static int bitpix=FLOAT_IMG;
+  const static int datatype=TFLOAT;
+  static float nulval;
+  static float max;
+  static float min;
+};
+
+template <>
+class fits_trait<double>
+{
+ public:
+  const static int bitpix=DOUBLE_IMG;
+  const static int datatype=TDOUBLE;
+  static double nulval;
+  static double max;
+  static double min;
+};
+
+#ifdef WITH_COMPLEX
+template <>
+class fits_trait<std::complex<float> >
+{
+ public:
+  const static int bitpix=FLOAT_IMG;
+  const static int datatype=TCOMPLEX;
+  static std::complex<float> nulval;
+  //static float max;
+  //static float min;
+};
+
+template <>
+class fits_trait<std::complex<double> >
+{
+ public:
+  const static int bitpix=DOUBLE_IMG;
+  const static int datatype=TDBLCOMPLEX;
+  static std::complex<double> nulval;
+  //static double max;
+  //static double min;
+};
+#endif
+
+/* "fits_trait.h" ends */
+
+
+template <int typecode>
+class typecode_trait;
+
+template <>
+class typecode_trait<TSHORT>
+{
+ public:
+  typedef short datatype;
+};
+
+template <>
+class typecode_trait<TLONG>
+{
+ public:
+  typedef long datatype;
+};
+
+template <>
+class typecode_trait<TFLOAT>
+{
+ public:
+  typedef float datatype;
+};
+
+template <>
+class typecode_trait<TDOUBLE>
+{
+ public:
+  typedef double datatype;
+};
+
+#ifdef WITH_COMPLEX
+template <>
+class typecode_trait<TCOMPLEX>
+{
+ public:
+  typedef std::complex<float> datatype;
+};
+
+template <>
+class typecode_trait<TDBLCOMPLEX>
+{
+ public:
+  typedef std::complex<double> datatype;
+};
+#endif
 template <typename T>
 void get_all_col(cfitsfile& ff,::blitz::Array<T,1>& h1d,const char* colname)
 {

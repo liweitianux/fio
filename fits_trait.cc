@@ -1,4 +1,5 @@
-#include "fits_trait.h"
+#include "fio.h"
+
 #define DOUBLE_MAX 9e300;
 #define DOUBLE_MIN 0;
 #define FLOAT_MAX 9e30;
