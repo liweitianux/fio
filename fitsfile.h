@@ -18,25 +18,11 @@ class cfitsfile
   cfitsfile();
   ~cfitsfile();
 
-
  public:
   fitsfile*& fptr();
-
-
   int open(const char* name);
-
-
   int create(const char* name);
-
-
   void close();
-
-
-
-  
 };
-
-
-
 
 #endif

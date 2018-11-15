@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <utility>
 #include <fstream>
-#include "fio.h"
 #include <cassert>
 #include <vector>
+#include "fio.h"
 
 using namespace std;
 using namespace ::blitz;
