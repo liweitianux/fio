@@ -3,6 +3,6 @@ blitz-0.9/
 lib/
 include/
 
-# binaries
+*.o
 fits2txt
 txt2fits
