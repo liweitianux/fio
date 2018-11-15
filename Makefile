@@ -50,11 +50,15 @@ blitz-0.9: blitz-0.9.tar.gz
 	tar xf $<
 
 clean:
-	rm -f *.o $(TGT)
-	rm -rf blitz-0.9 include/blitz include/random
+	rm -f *.o
+	rm -rf blitz-0.9
+
+cleanall: clean
+	rm -f $(TGT)
+	rm -rf include/blitz include/random
 	rm -rf lib/pkgconfig lib/libblitz.*
 
 
-.PHONY: clean blitz
+.PHONY: clean cleanall blitz
 
 #  vim: set ts=8 sw=4 tw=0 fenc=utf-8 ft=make: #
