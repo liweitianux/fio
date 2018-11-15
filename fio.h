@@ -238,9 +238,9 @@ void operator<<(fitsfile* ff,::blitz::Array<T,2>& h2d)
      {
        std::cerr<<"error:"<<status<<std::endl;
      }
-   
+
    double crpix2p=0.5;
-   if(fits_update_key(ff,TDOUBLE,"CRPIX2P",&crpix1p,NULL,&status))
+   if(fits_update_key(ff,TDOUBLE,"CRPIX2P",&crpix2p,NULL,&status))
      {
        std::cerr<<"error:"<<status<<std::endl;
      }
@@ -368,9 +368,9 @@ void operator<<(cfitsfile& cff,::blitz::Array<T,3>& h2d)
      {
        std::cerr<<"error:"<<status<<std::endl;
      }
-   
+
    double crpix2p=0.5;
-   if(fits_update_key(ff,TDOUBLE,"CRPIX2P",&crpix1p,NULL,&status))
+   if(fits_update_key(ff,TDOUBLE,"CRPIX2P",&crpix2p,NULL,&status))
      {
        std::cerr<<"error:"<<status<<std::endl;
      }
